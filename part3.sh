@@ -1,6 +1,6 @@
 #!/bin/bash
-train_file=test.txt
-test_file=test.txt
+train_file=/home/xsayas@GU.GU.SE/scratch/lt2222-v21-resources/svtrain.lower.txt
+test_file=/home/xsayas@GU.GU.SE/scratch/lt2222-v21-resources/svtest.lower.txt
 my_ks=( 50 100 150 200 250 300 )
 my_rs=( 50 100 150 200 250 300 )
 
