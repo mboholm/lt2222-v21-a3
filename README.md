@@ -26,12 +26,13 @@ The commmand line arguments of `argparse` are as follows:
 ## Part 2
 For `eval.py` the following design choices are the ones most in need of commenting: 
 
-1. The functions of `a()` and `b()` of `train.py` are used for preprocessing the data in `eval.py`; thus, `train` is a module of `eval.py`.
-2. Through `argparse` there are three obligatory arguments to run the file: 
+1. The function `a()` of `train.py` is used for preprocessing the data in `eval.py`; thus, `train` is a module of `eval.py`.
+2. Versions of `b()` and `g()` are adapted for the evaluation, in order to handle new symbols of the test file which are not "recognized" by the model. 
+3. Through `argparse` there are three obligatory arguments to run the file: 
     i. the model (as saved by `train.py`); 
-    ii. the text fiel to be processed for evaluation; and 
+    ii. the text file to be processed for evaluation; and 
     iii. a path for the output text file where vowles have been replaced, as suggested by the model.
-3. For the variable `predictions` this is defined by a list comprehension (`[torch.topk(x, 1)[1] for x in model(torch.FloatTensor(test_X))]`), where:
+4. For the variable `predictions` this is defined by a list comprehension (`[torch.topk(x, 1)[1] for x in model(torch.FloatTensor(test_X))]`), where:
     - predictions of the model based on the test features (`test_X`) are traversed,
     - so that every prediction (which is a tensor of log probabilities) is processed through `tourch.topk()`, 
     - which returns the top *k* values of a tensor and its indecies as tuples (thus the index `[1]` on that function output for getting the index of the maximum value)
@@ -39,33 +40,7 @@ For `eval.py` the following design choices are the ones most in need of commenti
 
 ## Part 3
 
-for test.txt
-EVAL
-k50 (hidden layer)
-Accuracy: 0.18.
-k100 (hidden layer)
-Accuracy: 0.06.
-k150 (hidden layer)
-Accuracy: 0.09.
-k200 (hidden layer)
-Accuracy: 0.09.
-k250 (hidden layer)
-Accuracy: 0.09.
-k300 (hidden layer)
-Accuracy: 0.08.
 
-r50 (epochs)
-Accuracy: 0.09.
-r100 (epochs)
-Accuracy: 0.04.
-r150 (epochs)
-Accuracy: 0.06.
-r200 (epochs)
-Accuracy: 0.17.
-r250 (epochs)
-Accuracy: 0.06.
-r300 (epochs)
-Accuracy: 0.05.
 
 
 ## Bonuses

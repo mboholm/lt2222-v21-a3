@@ -3,6 +3,53 @@ import numpy as np
 import argparse
 import torch
 
+
+def unknown(features_for_instance,vocy_list):
+	"""
+	Takes a list of features and replaces those features that are not recognized by the model (as defined by vocy_list) with the integer 0.
+	"""
+
+	replace_unknown=[]
+	for f in features_for_instance:
+		if f in vocy_list:
+			replace_unknown.append(f)
+		else:
+			replace_unknown.append(0) #the integer 0 is used for unknowns
+
+	return replace_unknown
+
+def g_two(x, voc):
+    """
+    A version of g(), from train.py, which return "no-hot" vectors for unknown features (i.e. features not encountered when training). 
+
+    Takes a list of features (x) and a "vocabulary" (voc), and returns a collapsed one-hot representation of those symbols with regard to the vocabulary.
+    """
+
+    z = np.zeros(len(voc))
+    if x!=0:
+	    z[voc.index(x)] = 1
+    return z
+
+def b_two(text, voc):
+    """
+    A version of b(), from train.py, which handles unknown features (i.e. features not encountered when training). 
+
+    Takes a text and a vocabulary (voc) and returns features (test_X) and true classes (truth)
+    """
+
+    gt = [] #this is the class
+    gr = [] #this it the features
+    for v in range(len(text) - 4):
+        if text[v+2] not in vowels: #first two tokens are startsymbols ("<s>") 
+            continue
+        
+        h2 = vowels.index(text[v+2])
+        gt.append(h2)
+        r = np.concatenate([g_two(x, voc) for x in unknown([text[v], text[v+1], text[v+3], text[v+4]], voc)]) 
+        gr.append(r) 
+
+    return np.array(gr), np.array(gt) #features, truth
+
 def accuracy(truth, predictions):
 	"""
 	Calculates the accuracy of the classifier and prints to terminal.
@@ -40,7 +87,7 @@ def list_to_file(c_list, path):
 	Takes a list of characters (c_list) and write that to a file (path). 
 	"""
 
-	with open(path, mode="w") as file:
+	with open(path, mode="w", encoding="utf-8") as file:
 		for c in c_list:
 			file.write(c)
 
@@ -53,11 +100,15 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 
 	vowels=train.vowels
-	text, vocy = train.a(args.test_text)
-	test_X, truth = train.b(text, vocy)
 
 	model = torch.load(args.model)
 	model.eval()
+
+	vocy = model.vocab #to build features and true class for evaluation, the vocabulary used for building the model is used (not the vocabulary of the test text, per se)
+
+	text = train.a(args.test_text)[0] #uses a() of train.py
+	test_X, truth = b_two(text, vocy)
+
 	predictions=[torch.topk(x, 1)[1] for x in model(torch.FloatTensor(test_X))]
 	#there is a lot going on here, which can be clarified as follows: 
 	#the features (test_X, as tensor) are processed through the model
