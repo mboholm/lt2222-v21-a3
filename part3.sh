@@ -16,24 +16,28 @@ fi
 
 echo "--------"
 echo "TRAIN"
-for k in ${my_ks[@]}; do	
+for k in ${my_ks[@]}
+do
    echo "k"$k" (hidden layer)"
-   python train.py $train_file models/model_k$k --k $k
+   python3 train.py $train_file models/model_k$k --k $k
 done
 
-for r in ${my_rs[@]}; do
+for r in ${my_rs[@]}
+do
    echo "r"$r" (epochs)"
-   python train.py $train_file models/model_r$r --r $r
+   python3 train.py $train_file models/model_r$r --r $r
 done
 
 echo "--------"
 echo "EVAL"
-for k in ${my_ks[@]}; do	
+for k in ${my_ks[@]}
+do
    echo "k"$k" (hidden layer)"
-   python eval.py models/model_k$k $test_file outputs/output_k$k
+   python3 eval.py models/model_k$k $test_file outputs/output_k$k
 done
 
-for r in ${my_rs[@]}; do
+for r in ${my_rs[@]}
+do
    echo "r"$r" (epochs)"
-   python eval.py models/model_r$r $test_file outputs/output_r$r
+   python3 eval.py models/model_r$r $test_file outputs/output_r$r
 done

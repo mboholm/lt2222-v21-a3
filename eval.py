@@ -1,8 +1,9 @@
+import os
+import sys
 import train #i.e. the python file used for training the model
 import numpy as np
 import argparse
 import torch
-
 
 def unknown(features_for_instance,vocy_list):
 	"""
@@ -93,7 +94,7 @@ def list_to_file(c_list, path):
 
 
 if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description="Takes a PyTorch model and a text for testing and outputs 1. a text transformed by the model and 2. the accuracy of the model on that text (printed to the terminal). For 3. perplexity, provide (optional) argument p.")
+	parser = argparse.ArgumentParser(description="Takes a PyTorch model and a text for testing and outputs 1. a text transformed by the model and 2. the accuracy of the model on that text (printed to the terminal).")
 	parser.add_argument("model", type=str, help="The model.")
 	parser.add_argument("test_text", type=str, help="The test file.")
 	parser.add_argument("output_txt", type=str, help="File (path) for the transformed test file, where vowels have been changed according to model.")
