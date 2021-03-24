@@ -29,9 +29,9 @@ For `eval.py` the following design choices are the ones most in need of commenti
 1. The function `a()` of `train.py` is used for loading and preprocessing the testing (evaluation) data. Thus, `train` is a module of `eval.py`.
 2. Versions of `b()` and `g()` from `train.py` (i.e. `b_two()` and `g_two()` in `eval.py`) are adapted for the evaluation such that they handle new symbols of the test file which are not "recognized" by the model, i.e not part of the training features. Previously unseen chracters are ignored. In the concatenated vectors for features, the features not part of the training are treated as "all zero vectors". 
 3. Through `argparse` there are three obligatory arguments for running the file `eval.py`: 
-    i. the model (as saved by `train.py`). (Note: by convention, the file endings `.pt` or `.pth` can be used to save - and load - models; https://pytorch.org/tutorials/beginner/saving_loading_models.htm)
-    ii. the text file to be processed in evaluation; and 
-    iii. a path for the output text file where vowels have been replaced, as suggested by the model.
+	i.	the model (as saved by `train.py`). (Note: by convention, the file endings `.pt` or `.pth` can be used to save - and load - models; https://pytorch.org/tutorials/beginner/saving_loading_models.htm)
+	ii	the text file to be processed in evaluation; and 
+	iii.	a path for the output text file where vowels have been replaced, as suggested by the model.
 4. For the variable `predictions` in `eval.py` this is defined by a list comprehension (`[torch.topk(x, 1)[1] for x in model(torch.FloatTensor(test_X))]`), where:
     - predictions of the model based on the test features (`test_X`) are traversed,
     - so that every prediction (which is a tensor of log probabilities) is processed through `tourch.topk()`, 
