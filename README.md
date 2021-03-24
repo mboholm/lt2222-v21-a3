@@ -55,18 +55,23 @@ I have trained models with the following parameters (there is a bash script for 
 |            | r200|   0.182|
 |            | r250|   0.236|
 |            | r300|   0.097|
+*Note:* default values for *k* and *r*: *k* (default) = 200; *r* (default) = 100.
 
+Of these the best model in terms of accuracy is the *k*=100 model (where *k* is the size of the hidden layer). This model is part of the respository as `best_model.pt`. The text "produced by" the model is called `text_best_model.txt` in respository.  
 
-Of these the best model in terms of accuracy is the k=100 model (where k is size of hidden layer).
+Furthermore, for Part 3, we are asked to:
+
+> Describe any patterns you see, if there are any. Look at the output texts and make qualitative comments on the performances of the model.
+
+*    *Observation 1:* The effects of altering *k* and *r* are non-linear. For example, considering *k*, moving from *k*=50 to *k*=100, improves accuracy, while for *k*=150, the accuracy drops radically, recovering somewhat for *k*=200, and so on.  
+*    *Observation 2:* The output text from "the best model" is in large parts incomprehensible, even for a native speaker of Swedish. Indeed, the original 19th centery text requires some extra effort for reading, but most of it is possible to grasp. The output text, on the other hand, mostly looks like "toy Scandinvian". As such, this text is illustrative of what accuracy=0.453 result in for a task like this one.
+*    *Observation 3:* Vowels in (short) function words (e.g. *och*, *att*, *för*, *än*, *som*, and *till*) seems to be the ones best predicted by the model. The explanation for this is probably the commonality of these words in corpora, which result in high frequencies of class-features assocaitions in training; in turn, providing the better data for learning these associations.     
  
-Note default values for k and r:
-k(default=200
-r(default)=100
 
 ## Bonuses
 I have not done any bonuses.
 
 ## Other notes
-When running `train.py` and then using the model it prodces in `eval.py` I did have problems with an error which ended by:
-    _pickle.UnpicklingError: invalid loan key ...
-After some investigations on the web, I came to the conclusion that this error could result from a incomplete saving by `train.py`; thus, problems with loading a corrupt file. 
+When running `train.py` and then using the model it produces in `eval.py`, I did have problems with an error that ended by:
+	_pickle.UnpicklingError: invalid loan key ...
+After some investigations on this error on the web, I came to the conclusion that this error could result from a incomplete saving by `train.py`. The problem was solved by producing a new model from `train.py`. 
