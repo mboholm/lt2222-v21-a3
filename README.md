@@ -64,7 +64,7 @@ Furthermore, for Part 3, we are asked to:
 
 > Describe any patterns you see, if there are any. Look at the output texts and make qualitative comments on the performances of the model.
 
-*    *Observation 1:* The effects of altering *k* and *r* are non-linear. For example, considering *k*, moving from *k*=50 to *k*=100, improves accuracy, while for *k*=150, the accuracy drops radically, recovering somewhat for *k*=200, and so on.  
+*    *Observation 1:* The effects of altering *k* and *r* seems to be non-linear. For example, considering *k*, moving from *k*=50 to *k*=100, improves accuracy, while for *k*=150, the accuracy drops radically, recovering somewhat for *k*=200, and so on.  
 *    *Observation 2:* The output text from "the best model" is in large parts incomprehensible, even for a native speaker of Swedish. Indeed, the original 19th centery text requires some extra effort for reading, but most of it is possible to grasp. The output text, on the other hand, mostly looks like "toy Scandinvian". As such, this text is illustrative of what accuracy=0.453 result in for a task like this one.
 *    *Observation 3:* Vowels in (short) function words (e.g. *och*, *att*, *för*, *än*, *som*, and *till*) seems to be the ones best predicted by the model. The explanation for this is probably the commonality of these words in corpora, which result in high frequencies of class-features assocaitions in training; in turn, providing the better data for learning these associations.     
 
